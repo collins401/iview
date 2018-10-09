@@ -1,9 +1,20 @@
 <template>
     <div @click="onHeaderClick">
-        <div class="ivu-tag ivu-tag-checked" v-for="item in selectedMultiple">
-            <span class="ivu-tag-text">{{ item.label }}</span>
-            <Icon type="ios-close" @click.native.stop="removeTag(item)"></Icon>
-        </div>
+        <span v-if="collapseTags">
+            <div class="ivu-tag ivu-tag-checked">
+                <span class="ivu-tag-text">{{ selectedMultiple[0].label }}</span>
+                <Icon type="ios-close" @click.native.stop="removeTag(selectedMultiple[0])"></Icon>
+            </div>
+            <div class="ivu-tag ivu-tag-checked" v-if="selectedMultiple.length > 1">
+                <span class="ivu-tag-text">+{{ selectedMultiple.length - 1 }}</span>
+            </div>
+        </span>
+        <span v-if="!collapseTags">
+            <div class="ivu-tag ivu-tag-checked" v-for="item in selectedMultiple">
+                <span class="ivu-tag-text">{{ item.label }}</span>
+                <Icon type="ios-close" @click.native.stop="removeTag(item)"></Icon>
+            </div>
+        </span>
         <span
             :class="singleDisplayClasses"
             v-show="singleDisplayValue"
@@ -77,6 +88,10 @@
             queryProp: {
                 type: String,
                 default: ''
+            },
+            collapseTags: {
+                type: Boolean,
+                default: false
             }
         },
         data () {
