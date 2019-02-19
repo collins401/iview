@@ -513,6 +513,9 @@
                         this.$nextTick(() => {
                             const caretPosition = this.caretPosition === -1 ? input.value.length : this.caretPosition;
                             input.setSelectionRange(caretPosition, caretPosition);
+                            setTimeout(() => {
+                                this.query = '';
+                            }, 300);
                         });
                     }
 
